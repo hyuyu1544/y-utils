@@ -7,14 +7,14 @@ import time
 # TODO:: 確定好結構，及每個func名稱，說明文件
 
 
-def Count_timer(func):
+def Counter(func):
     """Decorator for counting timer."""
     @wraps(func)
     def wrapper(*args, **kwargs):
         pass
 
 
-def Timming_timer(func):
+def Timer(func):
     """Decorator for timming timer."""
     pass
 

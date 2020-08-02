@@ -1,5 +1,5 @@
 from functools import wraps
-
+import logging
 import time
 
 
@@ -9,14 +9,20 @@ import time
 
 def Counter(func):
     """Decorator for counting timer."""
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        pass
+    pass
 
 
 def Timer(func):
     """Decorator for timming timer."""
-    pass
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        ans = func(*args, **kwargs)
+        end_time = time.time()
+        running_time = end_time-start_time
+        logging.debug(f'{func.__name__} running in {running_time} sec.')
+        return ans
+    return wrapper
 
 
 def Retry_timer(func):

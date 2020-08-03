@@ -54,7 +54,7 @@ def Retry_timer(func,interval=3,retry_times=3):
     return wrapper
 
 
-def Schedule(func, interval=3):
+def Schedule(func, interval=3600):
     """Decorator for schedule program."""
     # TODO:: add func for user to input interval
     # TODO:: if func need to return something

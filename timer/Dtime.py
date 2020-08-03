@@ -5,7 +5,6 @@ import time
 logger = logging.getLogger(__name__)
 
 
-
 def Counter(func):
     """Decorator for counting timer."""
     @wraps(func)
@@ -18,7 +17,7 @@ def Counter(func):
         except Exception as e:
             logger.critical(e)
             logger.critical(f'{func.__name__} cannot work.')
-    wrapper.calls=1
+    wrapper.calls = 1
     return wrapper
 
 
@@ -54,4 +53,20 @@ def Retry_timer(func,interval=3,retry_times=3):
                 logger.critical(f'Failed to execute func:{func.__name__}')
     return wrapper
 
+
+def Schedule(func, interval=3):
+    """Decorator for schedule program."""
+    # TODO:: add func for user to input interval
+    # TODO:: if func need to return something
+    @wraps(func)
+    def wrapper(*args,**kwargs):
+        while True:
+            start_time = time.perf_counter()
+            func(*args,**kwargs)
+            running_time = time.perf_counter()-start_time
+            latency=interval-running_time
+            logger.debug(f'Next program:{func.__name__} will start at {latency} sec later.')
+            time.sleep(latency)
+            return wrapper(*args,**kwargs)
+    return wrapper
 

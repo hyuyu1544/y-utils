@@ -8,18 +8,29 @@ logger = logging.getLogger(__name__)
 
 def Counter(func):
     """Decorator for counting timer."""
-    pass
+    @wraps(func)
+    def wrapper(*args,**kwargs):
+        try:
+            ans = func(*args, **kwargs)
+            logger.debug(f'Running func:{func.__name__} for {wrapper.calls} times.')
+            wrapper.calls += 1
+            return ans
+        except Exception as e:
+            logger.critical(e)
+            logger.critical(f'{func.__name__} cannot work.')
+    wrapper.calls=1
+    return wrapper
 
 
 def Timer(func):
     """Decorator for timming timer."""
     @wraps(func)
     def wrapper(*args, **kwargs):
-        start_time = time.time()
+        start_time = time.perf_counter()
         ans = func(*args, **kwargs)
-        end_time = time.time()
+        end_time = time.perf_counter()
         running_time = end_time-start_time
-        logger.debug(f'{func.__name__} running in {running_time} sec.')
+        logger.debug(f'func:{func.__name__} running in {running_time:.4f} sec.')
         return ans
     return wrapper
     

@@ -7,7 +7,10 @@ if __name__ == '__main__':
     setup(
         name='yutils',
         version='0.0.0',
-        packages=find_packages(),
+        packages=['yutils.log', 'yutils.timer', 'yutils.funs'],
+        package_dir={'yutils.log': 'log',
+                     'yutils.timer': 'timer',
+                     'yutils.funs': 'funs'},
         install_requires=external_modules,
         author='Yu-Yu',
         author_email='hyuyu1544@gmail.com',

@@ -1,7 +1,8 @@
 from functools import wraps
-from settings import logging
+from .settings import logging
 
 logger = logging.getLogger(__name__)
+
 
 def Error_Log(func):
     """Decorator for logging Exception but not stop the program."""

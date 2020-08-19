@@ -8,32 +8,45 @@ Not provide using `pip` install yet.
 
 ## Usage
 
-```
-from yutils import *
-```
-
-All functions:
-
 ### Counter
 
 A decorator to count the number of times the function is called.
+
+```
+from yutils import Counter
+
+@Counter
+def foo(*args,**kwargs):
+    pass
+```
 
 ### Timer
 
 A decorator to calculate function execution time.
 
+```
+from yutils import Timer
+
+@Timer
+def foo(*args,**kwargs):
+    pass
+```
+
 ### Retry_timer
 
 A decorator to help if function execution fail, how many times will retry and what is the retry interval.
 
-Use ```functools.partial```to change parameters.
-<br>
-example:
 ```
-from functools import partial
-My_retry_timer = partial(Retry_timer, interval=1, retry_times=5)
+from yutils import Retry_timer
 
-@My_retry_timer
+@Retry_timer()
+def foo(*arg,**kwargs):
+    pass
+```
+
+with parameters:
+```
+@Retry_timer(interval=1, retry_times=10)
 def foo(*arg,**kwargs):
     pass
 ```
@@ -42,14 +55,17 @@ def foo(*arg,**kwargs):
 
 A decorator to schedule the function execution time.
 
-Use ```functools.partial```to change parameters.
-<br>
-example:
 ```
-from functools import partial
-My_schedule = partial(Schedule, interval=60)
+from yutils import Schedule
 
-@My_schedule
+@Schedule()
+def foo(*arg,**kwargs):
+    pass
+```
+
+with parameters:
+```
+@Schedule(interval=10)
 def foo(*arg,**kwargs):
     pass
 ```
@@ -58,6 +74,22 @@ def foo(*arg,**kwargs):
 
 A decorator for logging Exception but not stop the program.
 
+```
+from yutils import Error_Log
+
+@Error_Log
+def foo(*args,**kwargs):
+    pass
+```
+
 ### TypePrints
 
 A decorator for print func.__doc__ like type prints.
+
+```
+from yutils import TypePrints
+
+@TypePrints
+def foo(*args,**kwargs):
+    pass
+```

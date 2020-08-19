@@ -1,4 +1,4 @@
-# yutils: provide some python tools which often used
+# yyutils: provide some python tools which often used
 <br>
 All tools are be provided as decorators.
 
@@ -13,7 +13,7 @@ Not provide using `pip` install yet.
 A decorator to count the number of times the function is called.
 
 ```
-from yutils import Counter
+from yyutils import Counter
 
 @Counter
 def foo(*args,**kwargs):
@@ -25,7 +25,7 @@ def foo(*args,**kwargs):
 A decorator to calculate function execution time.
 
 ```
-from yutils import Timer
+from yyutils import Timer
 
 @Timer
 def foo(*args,**kwargs):
@@ -37,7 +37,7 @@ def foo(*args,**kwargs):
 A decorator to help if function execution fail, how many times will retry and what is the retry interval.
 
 ```
-from yutils import Retry_timer
+from yyutils import Retry_timer
 
 @Retry_timer()
 def foo(*arg,**kwargs):
@@ -56,7 +56,7 @@ def foo(*arg,**kwargs):
 A decorator to schedule the function execution time.
 
 ```
-from yutils import Schedule
+from yyutils import Schedule
 
 @Schedule()
 def foo(*arg,**kwargs):
@@ -75,7 +75,7 @@ def foo(*arg,**kwargs):
 A decorator for logging Exception but not stop the program.
 
 ```
-from yutils import Error_Log
+from yyutils import Error_Log
 
 @Error_Log
 def foo(*args,**kwargs):
@@ -87,7 +87,7 @@ def foo(*args,**kwargs):
 A decorator for print func.__doc__ like type prints.
 
 ```
-from yutils import TypePrints
+from yyutils import TypePrints
 
 @TypePrints
 def foo(*args,**kwargs):

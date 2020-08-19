@@ -4,7 +4,7 @@ All tools are be provided as decorators.
 
 ## Installation
 
-Not provide using `pip` install yet.
+`pip install yyutils==0.0.1`
 
 ## Usage
 

@@ -1,4 +1,4 @@
-from functools import wraps, partial
+from functools import wraps
 from .settings import logging
 import time
 
@@ -36,39 +36,41 @@ def Timer(func):
     return wrapper
 
 
-def Retry_timer(func, interval=3, retry_times=3):
+def Retry_timer(interval=3, retry_times=3):
     """Decorator for retry func."""
-    # TODO:: add func for user to input interval and retry_times
-    @wraps(func)
-    def wrapper(count=1, interval=interval, retry_times=retry_times, *args, **kwargs):
-        try:
-            logger.debug(f'Try func:{func.__name__} {count} times.')
-            return func(*args, **kwargs)
-        except Exception as e:
-            logger.warning(f'There have some error: {e}')
-            count += 1
-            if count <= retry_times:
-                logger.debug(f'Will retry in {interval} sec.')
-                time.sleep(interval)
-                return wrapper(count=count, interval=interval, retry_times=retry_times, *args, **kwargs)
-            else:
-                logger.critical(f'Failed to execute func:{func.__name__}')
-    return wrapper
+    def retry_timer(func):
+        @wraps(func)
+        def wrapper(count=1, interval=interval, retry_times=retry_times, *args, **kwargs):
+            try:
+                logger.debug(f'Try func:{func.__name__} {count} times.')
+                return func(*args, **kwargs)
+            except Exception as e:
+                logger.warning(f'There have some error: {e}')
+                count += 1
+                if count <= retry_times:
+                    logger.debug(f'Will retry in {interval} sec.')
+                    time.sleep(interval)
+                    return wrapper(count=count, interval=interval, retry_times=retry_times, *args, **kwargs)
+                else:
+                    logger.critical(f'Failed to execute func:{func.__name__}')
+        return wrapper
+    return retry_timer
 
 
-def Schedule(func, interval=3600):
+def Schedule(interval=3600):
     """Decorator for schedule program."""
-    # TODO:: add func for user to input interval
     # TODO:: if func need to return something
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        while True:
-            start_time = time.perf_counter()
-            func(*args, **kwargs)
-            running_time = time.perf_counter()-start_time
-            latency = interval-running_time
-            logger.debug(
-                f'Next program:{func.__name__} will start at {latency} sec later.')
-            time.sleep(latency)
-            return wrapper(*args, **kwargs)
-    return wrapper
+    def schedule(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            while True:
+                start_time = time.perf_counter()
+                func(*args, **kwargs)
+                running_time = time.perf_counter()-start_time
+                latency = interval-running_time
+                logger.debug(
+                    f'Next program:{func.__name__} will start at {latency} sec later.')
+                time.sleep(latency)
+                return wrapper(*args, **kwargs)
+        return wrapper
+    return schedule
